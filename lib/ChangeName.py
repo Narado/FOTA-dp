@@ -12,7 +12,7 @@ from FOTA.interface import InterceptPic
 from selenium.common.exceptions import WebDriverException
 import time
 import winsound
-
+import py_compile
 
 class changeName:
     def __init__(self):
@@ -97,34 +97,53 @@ class changeName:
         return final_str
 
 
+    def changePyToPyc(self,file_path):
+        for root,dirs,files in os.walk(file_path):
+            print('root:',root) #当前目录路径
+            print('dirs:',dirs) #当前路径下所有子目录
+            print('files:',files)  #当前路径下所有非目录子文件
+            for file in files:
+                res = os.path.splitext(file)
+                print('res:',res)
+                if res[1]=='.py':
+                    py_compile.compile(os.path.join(root,file))
+
+
+
+
 if __name__ == '__main__':
 
 
     # string_list='[A1111AHC0212101800,A1111AHC0212108002]'
     # rf_list = changeName().stringL_removeFrame(string_list)
 
-    str = "2021-10-13 15:35:33    升级包下载中\n\n2021-10-13 15:35:41    升级包下载完成\n\n2021-10-13 15:35:41    升级包安装中\n\n2021-10-13 15:45:04    升级包安装完成"
-    str2 = "2021-10-13 15:35:33    升级包下载中"
-    print(str)
-    # newstr =  changeName().removeSpacebyPY(str)
-    driver = webdriver.Chrome()
-    changeName().removeSpacebyJS(driver, str2)
-    newstr = changeName().removeSpacebyPY(str)
-    newstr2 = changeName().removeSpacebyRE(str)
-    print(newstr)
-    print(newstr2)
-    newstr3 = re.match(r"[0-9]{4}-[0-9]{2}-[0-9]{2}\s+[0-9]{2}:[0-9]{2}:[0-9]{2}\s*",str)
-    newstr5 = re.findall(r"[\u4e00-\u9fa5]+",str2)
-    print(newstr3.group())
-    print(len(newstr5))
+    # str = "2021-10-13 15:35:33    升级包下载中\n\n2021-10-13 15:35:41    升级包下载完成\n\n2021-10-13 15:35:41    升级包安装中\n\n2021-10-13 15:45:04    升级包安装完成"
+    # str2 = "2021-10-13 15:35:33    升级包下载中"
+    # print(str)
+    # # newstr =  changeName().removeSpacebyPY(str)
+    # driver = webdriver.Chrome()
+    # changeName().removeSpacebyJS(driver, str2)
+    # newstr = changeName().removeSpacebyPY(str)
+    # newstr2 = changeName().removeSpacebyRE(str)
+    # print(newstr)
+    # print(newstr2)
+    # newstr3 = re.match(r"[0-9]{4}-[0-9]{2}-[0-9]{2}\s+[0-9]{2}:[0-9]{2}:[0-9]{2}\s*",str)
+    # newstr5 = re.findall(r"[\u4e00-\u9fa5]+",str2)
+    # print(newstr3.group())
+    # print(len(newstr5))
+    #
+    # try:
+    #     driver.execute_script("alert('升级包下载失败,请检查充电桩！');")
+    # except WebDriverException:
+    #     pass
+    #
+    # winsound.Beep(440,2000)
+    # winsound.PlaySound("升级包下载失败,请检查充电桩！", winsound.SND_ASYNC)
+    # time.sleep(2)
+    # print(driver.switch_to.alert.text)
+    # driver.switch_to.alert.accept() #确认
 
-    try:
-        driver.execute_script("alert('升级包下载失败,请检查充电桩！');")
-    except WebDriverException:
-        pass
-
-    winsound.Beep(440,2000)
-    winsound.PlaySound("升级包下载失败,请检查充电桩！", winsound.SND_ASYNC)
-    time.sleep(2)
-    print(driver.switch_to.alert.text)
-    driver.switch_to.alert.accept() #确认
+    dir_L =["bin","conf","core","dp","interface","lib","log"]
+    for dir in dir_L:
+        dir_path = "..\\"+dir
+        changeName().changePyToPyc(dir_path)
