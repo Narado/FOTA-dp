@@ -1,8 +1,8 @@
 
 
 Local $vVariavle
-$vPATH = "C:\04_AFC_package\AFC-100-AH-CN_V4.1.0_20210805_Filtered\TBOXC001R410_20210805\MPU\MPU0C001R410_20210730\fota\update.zip"
-
+;$vPATH = "C:\04_AFC_package\AFC-100-AH-CN_V4.1.0_20210805_Filtered\TBOXC001R410_20210805\MPU\MPU0C001R410_20210730\fota\update.zip"
+$vPATH = IniReadSection("..\conf\Fota.ini","tbox1mpuconf")
 
 ;ContorlFocus("title","text",controlID) Edit1=Edit instance 1
 ControlFocus("打开","","Edit1")
@@ -11,7 +11,7 @@ ControlFocus("打开","","Edit1")
 Winwait("[CLASS:#32770]","",10)
 
 ;Set the File name text on the Edit field
-ControlSetText("打开","","Edit1",$vPATH)
+ControlSetText("打开","","Edit1",$vPATH[1][1])
 
 Sleep(2000)
 

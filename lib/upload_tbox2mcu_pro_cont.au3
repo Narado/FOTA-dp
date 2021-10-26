@@ -1,8 +1,8 @@
 
 
 Local $vVariavle
-$vPATH = "C:\Users\lei.gao\AppData\Local\Programs\Python\Python39\Lib\site-packages\MyLibrary\FOTA\dp\TBOX2-MCU\tbox2_udsflash_v2.0.ini"
-
+;$vPATH = "C:\Users\lei.gao\AppData\Local\Programs\Python\Python39\Lib\site-packages\MyLibrary\FOTA\dp\TBOX2-MCU\tbox2_udsflash_v2.0.ini"
+$vPATH = IniReadSection("..\conf\Fota.ini","tbox2mcuconf")
 
 ;ContorlFocus("title","text",controlID) Edit1=Edit instance 1
 ControlFocus("打开","","Edit1")
@@ -11,7 +11,7 @@ ControlFocus("打开","","Edit1")
 Winwait("[CLASS:#32770]","",10)
 
 ;Set the File name text on the Edit field
-ControlSetText("打开","","Edit1",$vPATH)
+ControlSetText("打开","","Edit1",$vPATH[1][1])
 
 Sleep(2000)
 
