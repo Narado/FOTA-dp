@@ -8,7 +8,7 @@ import string
 import os
 import re
 from selenium import webdriver
-from FOTA.interface import InterceptPic
+from interface import InterceptPic
 from selenium.common.exceptions import WebDriverException
 import time
 import winsound

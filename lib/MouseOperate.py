@@ -5,10 +5,10 @@
 # @Software:PyCharm
 
 from selenium.webdriver.common.action_chains import ActionChains
-from FOTA.core import LoginFota
+from core import LoginFota
 import time
-from FOTA.interface import InterceptPic
-from FOTA.lib import  SoupCrawler
+from interface import InterceptPic
+from lib import  SoupCrawler
 class mouse_operate:
 
     sc = SoupCrawler.soup_crawler()

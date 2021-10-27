@@ -3,8 +3,8 @@ import os
 import time
 import numpy as np
 
-from FOTA.interface.InterceptPic import *
-from FOTA.core.LoginFota import *
+from interface.InterceptPic import *
+from core.LoginFota import *
 
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
@@ -14,17 +14,17 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from PyQt5.QtWidgets import *
 from datetime import datetime
-from FOTA.lib import SoundAlert
+from lib import SoundAlert
 
 
 from tkinter import filedialog
-from FOTA.lib import SwithCase
-from FOTA.lib import WatchProcess
-from FOTA.lib import MouseOperate
-from FOTA.lib import ChangeName
-from FOTA.lib import GetTime
-from FOTA.conf import readconfig
-from FOTA.interface import AddModuleContent
+from lib import SwithCase
+from lib import WatchProcess
+from lib import MouseOperate
+from lib import ChangeName
+from lib import GetTime
+from conf import readconfig
+from interface import AddModuleContent
 
 
 Bottom = 0

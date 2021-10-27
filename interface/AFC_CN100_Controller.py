@@ -7,9 +7,9 @@
 import os
 import time
 import datetime
-from FOTA.lib import ChangeName
-from FOTA.lib import MouseOperate
-from FOTA.conf import readconfig
+from lib import ChangeName
+from lib import MouseOperate
+from conf import readconfig
 
 class afcCN100Controller:
     changename = ChangeName.changeName()

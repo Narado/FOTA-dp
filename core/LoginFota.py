@@ -1,10 +1,10 @@
 #coding=utf-8
 
 
-from FOTA.interface.InterceptPic import *
-from FOTA.interface.FindText import *
-from FOTA.conf import readconfig
-from FOTA.lib import SoundAlert
+from interface.InterceptPic import *
+from interface.FindText import *
+from conf import readconfig
+from lib import SoundAlert
 
 class LoginFota:
 
@@ -45,6 +45,6 @@ class LoginFota:
                 break
         return driver
 
-    if __name__== "__main__":
-        lf = loginfota()
-        lf.fota_login_page()
+if __name__== "__main__":
+    lf = LoginFota()
+    lf.fota_login_page()

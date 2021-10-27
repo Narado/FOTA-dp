@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 # @Time    :2021/9/30 12:27
 # @Author  :Gao Lei
-# @FileName:Fota_Main.py
+# @FileName:FOTA_NEW_MAIN.py
 # @Software:PyCharm
 
-from FOTA.core import ManageFota
-from FOTA.core import LoginFota
-from FOTA.core import TaskFota
-from FOTA.core import StatusFota
-from FOTA.conf import readconfig
-from FOTA.lib import SaveLog
+from core import ManageFota
+from core import LoginFota
+from core import TaskFota
+from core import StatusFota
+from conf import readconfig
+from lib import SaveLog
 
 if __name__ == '__main__':
         lf = LoginFota.LoginFota()

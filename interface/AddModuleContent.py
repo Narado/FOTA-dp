@@ -7,9 +7,9 @@ import sys
 import time
 import os
 
-from FOTA.conf import readconfig
-from FOTA.lib import MouseOperate
-from FOTA.interface  import AFC_CN100_Controller
+from conf import readconfig
+from lib import MouseOperate
+from interface  import AFC_CN100_Controller
 
 class addModuleContent:
     mo = MouseOperate.mouse_operate() #创建鼠标操作对象

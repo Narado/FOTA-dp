@@ -7,7 +7,7 @@ import os
 import time
 import urllib.request
 from bs4 import BeautifulSoup
-from FOTA.lib import GetTime
+from lib import GetTime
 
 class soup_crawler:
     def __init__(self):

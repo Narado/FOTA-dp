@@ -1,10 +1,10 @@
 from AutoItLibrary import AutoItLibrary
-from FOTA.lib import MouseOperate
-from FOTA.lib import ChangeName
-from FOTA.conf import readconfig
-from FOTA.core import LoginFota
-from FOTA.core import ManageFota
-from FOTA.lib import SoundAlert
+from lib import MouseOperate
+from lib import ChangeName
+from conf import readconfig
+from core import LoginFota
+from core import ManageFota
+from lib import SoundAlert
 import time
 
 class TaskFota:
@@ -212,6 +212,7 @@ class TaskFota:
                 if value != '1px' :
                     print("已经找到可升级充电桩")
                     pilename_list = driver.find_elements_by_xpath("//div[@class='popup-form']//div[@class='mauna-body-viewport-wrapper']//div[@col-id='name']")
+                    print("pilename_list:",pilename_list)
                     for pilename in pilename_list:
                         print("桩名称为:",pilename.get_attribute("title"))
                 else:
@@ -246,15 +247,15 @@ class TaskFota:
         print("获取创建升级包时的时间:",now_time)
         # 从配置文件获取信息
 
-        task_name = readconfig.readconfig("..\\conf\\Fota.ini","taskconf","task_name")+now_time
-        package_name = readconfig.readconfig("..\\conf\\Fota.ini", "moduleconf", "package_name")+now_time
-        hwversion = readconfig.readconfig("..\\conf\\Fota.ini", "taskconf", "hwversion")
-        task_type = readconfig.readconfig("..\\conf\\Fota.ini", "taskconf", "task_type")
-        plan_time = readconfig.readconfig("..\\conf\\Fota.ini", "taskconf", "plan_time")
-        taskremark_content = readconfig.readconfig("..\\conf\\Fota.ini", "taskconf", "taskremark_content")
-        source_station = readconfig.readconfig("..\\conf\\Fota.ini", "sourcelistconf", "source_station")
-        source_piletype = readconfig.readconfig("..\\conf\\Fota.ini","sourcelistconf","source_piletype")
-        source_pileid_list = readconfig.readconfig("..\\conf\\Fota.ini","sourcelistconf","source_pileid")
+        task_name = readconfig.readconfig("..\\conf\\FOTA.ini","taskconf","task_name")+now_time
+        package_name = readconfig.readconfig("..\\conf\\FOTA.ini", "moduleconf", "package_name")+now_time
+        hwversion = readconfig.readconfig("..\\conf\\FOTA.ini", "taskconf", "hwversion")
+        task_type = readconfig.readconfig("..\\conf\\FOTA.ini", "taskconf", "task_type")
+        plan_time = readconfig.readconfig("..\\conf\\FOTA.ini", "taskconf", "plan_time")
+        taskremark_content = readconfig.readconfig("..\\conf\\FOTA.ini", "taskconf", "taskremark_content")
+        source_station = readconfig.readconfig("..\\conf\\FOTA.ini", "sourcelistconf", "source_station")
+        source_piletype = readconfig.readconfig("..\\conf\\FOTA.ini","sourcelistconf","source_piletype")
+        source_pileid_list = readconfig.readconfig("..\\conf\\FOTA.ini","sourcelistconf","source_pileid")
         # source_pileid_list_int = self.cn.stringL_to_intL(source_pileid_list)
         source_pileid_list_new = self.cn.stringL_removeFrame(source_pileid_list)
 
@@ -287,6 +288,6 @@ if __name__ == '__main__':
     lf = LoginFota.LoginFota()
     tf = TaskFota()
     driver = lf.fota_login_page()
-    tf.openTask(driver,3)
-    time.sleep(0.5)
-    tf.openAddPage(driver)
+    time.sleep(5)
+    tf.fota_task_page(driver,'20211027101646')
+

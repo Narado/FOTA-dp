@@ -4,7 +4,7 @@ from PIL import Image
 from PIL import ImageFilter
 import pytesseract
 import time
-import requests
+# import requests
 import matplotlib.pyplot as plt
 import cv2
 import numpy as np

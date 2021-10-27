@@ -6,7 +6,7 @@
 
 import logging
 import os
-from FOTA.lib import GetTime
+from lib import GetTime
 
 class save_log:
     def __init__(self):

@@ -12,7 +12,7 @@ import pythoncom
 import win32com.client
 from pygame import mixer
 from win32com.client import Dispatch
-from FOTA.lib import MultiThread
+from lib import MultiThread
 from selenium.common.exceptions import WebDriverException
 
 

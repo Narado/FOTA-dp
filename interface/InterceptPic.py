@@ -4,8 +4,8 @@ from selenium import webdriver
 import time
 import datetime
 from PIL import Image
-from FOTA.conf import  readconfig
-from FOTA.lib import GetTime
+from conf import  readconfig
+from lib import GetTime
 
 # from FindText import *
 

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 # @Time    :2021/10/13 10:12
 # @Author  :Gao Lei
-# @FileName:StatusFota.py
+# @FileName:Statuspy
 # @Software:PyCharm
 import time
-from FOTA.conf import readconfig
-from FOTA.lib import MouseOperate
-from FOTA.core import LoginFota
-from FOTA.lib import ChangeName
-from FOTA.lib import SoundAlert
-from FOTA.interface import InterceptPic
-from FOTA.lib import MultiThread
+from conf import readconfig
+from lib import MouseOperate
+from core import LoginFota
+from lib import ChangeName
+from lib import SoundAlert
+from interface import InterceptPic
+from lib import MultiThread
 
 DOWN_DIC={
 "DOWN_FAIL" : 0,
@@ -106,26 +106,33 @@ class StatusFota(object):
         # forceUp = driver.find_elements_by_xpath("//div[@col-id='force']")[1]
         self.mo.sliderollerRow(driver, 'mauna-body-viewport', 300)  # #整个查询内容的div向右移动380px，能看到“指令下发状态”位置
         time.sleep(2)
-        #查看指令下发状态，1.如果下发失败，需要重新下发，直到下发成功(一般下发失败的原因是升级桩不在线); 2.如果下发成功，直接打开管理中的日志，查看日志内容
+        #查看指令下发状态，1.如果下发失败，需要重新下发(3次)(一般下发失败的原因是升级桩不在线); 2.如果下发成功，直接打开管理中的日志，查看日志内容
         sendstatus = driver.find_elements_by_xpath("//div[@col-id='sendStatus']")[1]
         time.sleep(0.25)
         result = sendstatus.get_attribute("title")  #指令下发状态的值
+        fail_counter = 0
         while result == "下发失败":
-            print("************************************************************"
-                  "下发失败，请检查升级桩，保证升级桩在线，等待1min后，系统将会自动重新下发。"
-                  "************************************************************")
-            self.sa.beep()
-            self.sa.speak("下发失败，请检查升级桩，保证升级桩在线，等待1分钟后，系统将会自动重新下发!")
-            time.sleep(60)
-            self.reSend(driver) #重新下发
-            time.sleep(5)
-            refresh_element = driver.find_element_by_xpath("//button[contains(text(),'刷新') and @type='button']")
-            refresh_element.click() #点击"刷新"按钮
-            time.sleep(1)
-            sendstatus = driver.find_elements_by_xpath("//div[@col-id='sendStatus']")[1]
-            time.sleep(0.25)
-            result = sendstatus.get_attribute("title")  #查看指令下发状态
-            print("此时指令下发状态:", result)
+            if(fail_counter>2):
+                print("重试3次,结束任务")
+                break
+            else:
+                fail_counter = fail_counter+1
+                print("************************************************************"
+                      "下发失败，请检查升级桩，保证升级桩在线，等待1min后，系统将会自动重新下发。"
+                      "************************************************************")
+                self.sa.beep()
+                self.sa.speak("下发失败，请检查升级桩，保证升级桩在线，等待两分钟后，系统将会自动重新下发!")
+                time.sleep(10)
+                self.reSend(driver) #重新下发
+                time.sleep(5)
+                refresh_element = driver.find_element_by_xpath("//button[contains(text(),'刷新') and @type='button']")
+                refresh_element.click() #点击"刷新"按钮
+                time.sleep(1)
+                sendstatus = driver.find_elements_by_xpath("//div[@col-id='sendStatus']")[1]
+                time.sleep(0.25)
+                result = sendstatus.get_attribute("title")  #查看指令下发状态
+                print("此时指令下发状态:", result)
+
         return result
 
     #查看日志内容
@@ -249,20 +256,22 @@ class StatusFota(object):
         print("进入fota_status函数")
         now_time = status_time_string  # 获取创建升级包时的时间
         print("获取创建升级包时的时间:", now_time)
-        task_name = readconfig.readconfig("..\\conf\\Fota.ini", "taskconf", "task_name") + now_time # 从配置文件获取信息
+        task_name = readconfig.readconfig("..\\conf\\ini", "taskconf", "task_name") + now_time # 从配置文件获取信息
         driver.refresh()
         time.sleep(1)
         self.openStatus(driver,5)    # 打开升级状态页面
-        self.waitSendStatusOK(driver,task_name) #等待下发指令成功
-        self.monitorUpStatus(driver) #通过查看日志，监控升级结果
+        result = self.waitSendStatusOK(driver,task_name) #等待下发指令成功
+        if(result == "下发成功"):
+            self.monitorUpStatus(driver) #通过查看日志，监控升级结果
+        else:
+            print("下发失败3次，结束升级任务")
+            self.sa.speak("下发失败三次，将结束升级任务")
         return
 
 
 if __name__ == '__main__':
     sf = StatusFota()
-    # driver = sf.lf.fota_login_page()
-    driver = sf.ip.login("xuliyao","xuliyao")
-    time.sleep(15)
+    driver = sf.lf.fota_login_page()
 
-    sf.waitSendStatusOK(driver,"CN20211019123938")
-    sf.monitorUpStatus(driver)
+    time.sleep(15)
+    sf.fota_status_page(driver,'20211027101646')
